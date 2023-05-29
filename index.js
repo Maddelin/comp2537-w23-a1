@@ -176,8 +176,9 @@ app.post('/submitUser', async (req, res) => {
         const validationResult = schema.validate({ name, email, password });
         if (validationResult.error != null) {
             console.log(validationResult.error);
-            res.redirect("/signup");
-            return;
+            var html = `Name should only contain alphanumeric characters; name and password should not contain more than 20 characters. <br>`;
+            html += `<a href='/signup'>Try again</a>`
+            res.send(html);
         }
 
         var hashedPassword = await bcrypt.hash(password, saltRounds);
